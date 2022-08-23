@@ -1,0 +1,277 @@
+﻿<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <title>WebTiger Extension</title>
+  <link rel="shortcut icon" href="/static/favicon.ico"/>
+  <link rel="stylesheet" href="/static/style.css"> 
+  <script type="text/javascript" src="static/jquery.min.js"></script> <!--src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"-->
+  <script src="static/javascript.js"></script>
+</head>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    document.forms['nextPage'].elements["quaisCheckboxes"].value= document.getElementById("passCheckboxes").value;
+    document.forms['previousPage'].elements["quaisCheckboxes"].value= document.getElementById("passCheckboxes").value;
+    document.forms['firstPage'].elements["quaisCheckboxes"].value= document.getElementById("passCheckboxes").value;
+    document.forms['lastPage'].elements["quaisCheckboxes"].value= document.getElementById("passCheckboxes").value;
+    document.getElementById("quaisCheckboxes").value= document.getElementById("passCheckboxes").value;
+
+    var vetor='';
+    if (document.getElementById("passCheckboxes").value !='')
+      vetor= (document.getElementById("passCheckboxes").value).split(" ");
+    console.log ('COMPARA VETOR:',vetor, ' COM: ');
+
+    // marcando os checkboxes de paginas anteriores
+
+    for (i=0; i<document.getElementsByName('checkbox').length; i++) {
+        if ( (vetor).includes (document.getElementsByName('checkbox')[i].value) )
+          document.getElementsByName('checkbox')[i].checked = 'checked';
+          console.log(document.getElementsByName('checkbox')[i].value); 
+        }
+
+    //marcando checkbox de "todos"    
+    var flag= false;    
+    for (i=0; i<document.getElementsByName('checkbox').length; i++)
+      if (! ( (document.getElementsByName('checkbox')[i]).checked ) ){
+        flag=true;
+        break;
+      }
+
+    if (flag == false)  
+      document.getElementById('checkboxParcial').checked = true;
+
+    //console.log('finalNextPage:'+document.forms['nextPage'].elements["quaisCheckboxes"].value);
+
+    if (document.getElementById("passWORDhidden").value=='checked') {
+      document.forms['nextPage'].elements["WORDhidden"].value= 'checked';
+      document.forms['previousPage'].elements["WORDhidden"].value= 'checked';
+      document.forms['firstPage'].elements["WORDhidden"].value= 'checked';
+      document.forms['lastPage'].elements["WORDhidden"].value= 'checked';
+      document.getElementById("WORD").checked=true;
+    }
+     if (document.getElementById("passPDFhidden").value=='checked') {
+      document.forms['nextPage'].elements["PDFhidden"].value= 'checked';
+      document.forms['previousPage'].elements["PDFhidden"].value= 'checked';
+      document.forms['firstPage'].elements["PDFhidden"].value= 'checked';
+      document.forms['lastPage'].elements["PDFhidden"].value= 'checked';
+      document.getElementById("PDF").checked=true;
+    }
+
+    if (document.getElementById("passCheckBoxTotal").value=='checked') {
+      document.forms['nextPage'].elements["checkBoxTotalHidden"].value= 'checked';
+      document.forms['previousPage'].elements["checkBoxTotalHidden"].value= 'checked';
+      document.forms['firstPage'].elements["checkBoxTotalHidden"].value= 'checked';
+      document.forms['lastPage'].elements["checkBoxTotalHidden"].value= 'checked';
+      document.getElementById("checkboxTotal").checked=true;
+    }
+
+});
+
+</script>
+
+<body>
+  <section class="container">
+    <div class="layout">
+
+    <div>
+      <img src="static/favicon.ico"><h2>WebTiger Downloads</h2> 
+      <form action='/webtiger/downloads' style='float:right;'> <!-- /webtiger/downloads -->
+         
+      
+      <form action='/webtiger/downloads/voltarPagina' style='float:right; padding-right:10px'>  <!--/webtiger/downloads/voltarPagina -->
+        
+      </form>  
+    </div>
+  
+     
+
+      <table><tr><td style="text-align: center"><div id="totalReg"><b>Total de Registros:1</b></div> </tr></table> <table id="cabecalho" style="display:none">
+            <tr> 
+                <td id ='identificador'><input id='checkboxParcial' type="checkbox" title='Seleciona todos os registros da página corrente' onchange='qtoCheckboxesChecked(this);'></td>
+                <td style='text-align: center'> 
+                  <div id='totalReg'>
+                      <b>Total de Registros: 1</b><br/>
+                      <input id='checkboxTotal' type="checkbox" title='Seleciona todos os registros de todas as páginas' onchange="checkboxTotalAction(this)"> Selecione todos os registros
+                       <div id="littleLoading" style='display: none'>
+                          <img src= '/static/loading-icon.gif' class="modal-content2"/>
+                      </div>   
+                  </div>
+                    <div id = 'controles'>
+                      
+                    <input type='hidden' id='passCheckboxes' value=""/>   
+                    <input type='hidden' id='passWORDhidden' value=""/> 
+                    <input type='hidden' id='passPDFhidden' value=""/> 
+                    <input type='hidden' id='passCheckBoxTotal' value=''/>  
+
+                    <form id='firstPage' action='firstLastPage' method='POST'> 
+                          <input type='hidden' name='lenght' value="1"/>
+                          <input type='hidden' name='start' value="0"/>
+                          <input type='hidden' name='end' value="20"/>
+                          <input type='hidden' name='rawQuery' value=""/>
+                          <input type='hidden' name='NameDir' value="TodasGravacoes_04_02_2019-22.42.49"/> 
+                          <input type='hidden' name='comFotos' value="comFoto"/>
+                          <input type='hidden' name='browser' value=""/> 
+
+                          <input type='hidden' name='checkBoxTotalHidden' value=''/>  
+
+                          <input type='hidden' name='WORDhidden' value=''/> 
+                          <input type='hidden' name='PDFhidden' value=''/>
+
+                          <input type='hidden' name='quaisCheckboxes' value=''/> 
+
+                          
+                     </form>       
+
+                          <form id='previousPage' action='previousPage' method='POST'> 
+                            <input type='hidden' name='lenght' value="1"/> 
+                            <input type='hidden' name='start' value="0"/> 
+                            <input type='hidden' name='end' value="1"/>
+                            <input type='hidden' name='rawQuery' value=""/> 
+                            <input type='hidden' name='NameDir' value="TodasGravacoes_04_02_2019-22.42.49"/>
+                            <input type='hidden' name='comFotos' value="comFoto"/>
+                            <input type='hidden' name='browser' value=""/> 
+                            <input type='hidden' name='checkBoxTotalHidden' value=''/>   
+
+                            <input type='hidden' name='WORDhidden' value=''/> 
+                            <input type='hidden' name='PDFhidden' value=''/>
+
+                            <input type='hidden' name='quaisCheckboxes' value=''/> 
+
+                            
+                          </form>
+                    
+                      <div id='pagination'><b> Página 
+                       
+                         1 
+                       
+
+                       de
+
+                       
+                            1    
+                          
+                      </b></div>
+
+               <form id='nextPage' action='nextPage' method='POST'> 
+                  <input type='hidden' name='lenght' value="1"/>
+                  <input type='hidden' name='start' value="0"/>
+                  <input type='hidden' name='end' value="1"/>
+                  <input type='hidden' name='rawQuery' value=""/>
+                  <input type='hidden' name='NameDir' value="TodasGravacoes_04_02_2019-22.42.49"/>
+                  <input type='hidden' name='comFotos' value="comFoto"/> 
+                  <input type='hidden' name='browser' value=""/> 
+                  <input type='hidden' name='checkBoxTotalHidden' value=''/> 
+
+                  <input type='hidden' name='WORDhidden' value=''/> 
+                  <input type='hidden' name='PDFhidden' value=''/>  
+
+                  <input type='hidden' name='quaisCheckboxes' value=''/> 
+
+                     
+               </form>
+
+               <form id='lastPage' action='firstLastPage' method='POST'> 
+                          <input type='hidden' name='lenght' value="1"/>
+                          <input type='hidden' name='start' value="0"/> 
+                          <input type='hidden' name='end' value="1"/>
+                          <input type='hidden' name='rawQuery' value=""/>
+                          <input type='hidden' name='NameDir' value="TodasGravacoes_04_02_2019-22.42.49"/> 
+                          <input type='hidden' name='comFotos' value="comFoto"/>
+                          <input type='hidden' name='browser' value=""/> 
+                          <input type='hidden' name='checkBoxTotalHidden' value=''/> 
+
+                          <input type='hidden' name='WORDhidden' value=''/> 
+                          <input type='hidden' name='PDFhidden' value=''/>  
+
+                          <input type='hidden' name='quaisCheckboxes' value=''/> 
+
+                          
+               </form>
+          </div> 
+         
+         <div id="controlesDownload"> 
+                  <span style='font-size: large; margin-right:10px'>WORD</span><input type="checkbox" name="WORDdownload" id='WORD' onclick='pressWord(this)'> 
+                  <span style='font-size: large; margin-right:10px'>PDF</span><input type="checkbox" name="PDFdownload" id='PDF' onclick='pressPDF(this)'>   
+                  <input type='hidden' id='downloadToken' name='downloadToken' value=''/>
+                  <input type='hidden' id='NameDir' name='NameDir' value="TodasGravacoes_04_02_2019-22.42.49"/> 
+                  <input type='hidden' id='rawQuery' name='rawQuery' value=""/> 
+                  <input type='hidden' id='quaisCheckboxes' name='quaisCheckboxes' value=''/>
+                  <input type='hidden' id='comFotos' name='comFotos' value="comFoto"/> 
+                 <button id='download' title='Selecione ao menos um registro para download' onclick="Download()"> DOWNLOAD </button> 
+              <div id="myModal" class="modal">
+                <div id="page-wrap">
+                <div class="meter">
+                  <span id='loading' style="width: 0%"></span>
+                </div></div>
+                <div id="caption">Carregando, aguarde...</div>
+              </div>   
+          </div>    
+              </td> 
+            </tr>      
+      </table>
+
+      
+          <table>
+            <tr> 
+              <td id ='identificador'><b>1</b><br> 
+                <input type="hidden" id="4724" value="4724" onchange="sumChecked(this)"></td>  
+                 
+                <td id='foto'>
+                
+                  <span style="color:red"><b>Não há foto</b></span>
+                
+                </td> 
+              
+              <td>
+               <table>
+                  <tr>
+                      <td id='first'> <b>ID Chamada:</b> 4724 </td> 
+                      <td> <b>Data:</b>  21/10/2013 09:44:20 </td> 
+                      <td> <b>Duração:</b> 0h00m03s </td>
+                     <td> <b>Direção:</b>  
+                         
+                            Saída
+                          </td>   
+                  </tr>  
+                  <tr>
+                     <td id='first'> <b>Alvo:</b>  Marcia (Marcinha) </td> 
+                     <td> <b>Telefone:</b> (31) 1234-56789 </td>
+                     <td> <b>IMEI:</b> 0213654 </td>
+                     <td> <b>Interlocutor:</b> 
+                           (32) 1321-31232 
+                            
+                            <br/> ()
+                            </td>
+                  </tr>
+                </table>                
+                    <span id='first'>
+                          <b>Transcrição:</b> 999 </span>  <br/> <br/> 
+                  
+                         <span id='first'>
+                         <b>Sinopse:</b>  </span> <br/> <br/>
+
+                           <span id='first'> 
+                              <b>Áudio:</b> 
+                             <audio id='player4724' onloadeddata="myOnLoadedData(4724)" controls>
+                                <source src="/imageAudio/"  type="audio/wav">
+                                  
+                             </audio>  
+                              
+                                
+                                  <span style="color:red; padding-left:30px"><b> Gravação interrompida! Motivo: Duração curta! </b><br></span>
+                                
+                             
+                            </span>
+                        </span> 
+                </td>
+            </tr>
+          </table>
+      
+    
+    <br/>
+    
+            <span style='text-align: right'><h3>@ Wytron</h3></span>
+      </div>
+  </section>
+</body>
+</html>

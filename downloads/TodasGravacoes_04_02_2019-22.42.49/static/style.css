@@ -1,0 +1,300 @@
+body {
+  font: 13px/20px 'Lucida Grande', Tahoma, Verdana, sans-serif;
+  color: #006622;
+  background: #D8D8D8;
+}
+
+.container {
+  margin: 30px 20px;
+  border: solid;
+}
+
+.layout {
+  position: relative;
+  margin: auto;
+  padding: 20px 20px 0px;
+  background: white;
+  border-radius: 3px;
+  border-style: solid;
+  border-color: #B0B0B0;
+  text-align: left;
+
+  #logo {
+    height:42; 
+    width:42;
+    float:left;
+  }
+}
+
+form, label, h2, button, #pagination, #controles, #controlesDownload, #totalReg  {
+  display: inline-block;
+}
+
+label {
+   width: 145px;
+}
+
+h2{ 
+  vertical-align:top;
+  margin-left:10px;
+}
+
+table {
+  width:100%;
+  table-layout: fixed;
+}
+
+ tr {
+    background-color: #E8EFF7;
+    padding: 10px;
+  }
+
+ th {
+    background-color: #D0E0EF;
+    padding: 10px;
+  }
+
+button {
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#foto {
+  width: 10%;
+  text-align: center;
+}
+
+#identificador {
+  width: 4%;
+  text-align: center;
+}
+
+img {
+  max-width:100%;
+  max-height:100%;
+}
+
+#first{
+  padding-left: 20px;
+}
+
+#pagination, #controles, #controlesDownload, #totalReg {
+  padding: 10px; 
+}
+
+#totalReg{
+  float: left; 
+  text-align: left;
+}
+
+#controles button, #controlesDownload button {
+     font-size: 16px;
+     padding: 10px 25px;
+  }
+
+#WORD, #PDF {
+  transform: scale(1.5);
+  margin-right: 30px;
+}
+
+#download, button {
+  background-color: #4CAF50; /* Green */
+}
+
+#controlesDownload {
+  float: right;
+}
+
+#DownloadLoading{   /***LOADING ELEMENT ****/
+  position: relative;
+}
+
+#sair {
+  float:right;
+  background-color: #008CBA;
+  padding: 10px 20px;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 300px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+}
+
+/* Modal Content (image) */
+.modal-content {
+    width: 500px;
+    margin-left: 42%;
+    height: 25px;
+    position: absolute; 
+    left: -100px;
+}
+
+.modal-content2 {
+    width: 80px;
+    margin-left: 1%;
+    height: 20px;
+    position:absolute; 
+    top:100px;
+}
+/* Caption of Modal Image */
+#caption {
+    font-size: large;
+    display: block;
+    /*font-size: 100%;*/
+    text-align: center;
+    color: #e8e8e8;
+    font-weight: bold;
+    padding: 0px 0;
+}
+
+/* Add Animation */
+.modal-content, #caption {
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)}
+    to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+    from {transform:scale(0)}
+    to {transform:scale(1)}
+}
+
+/* 100% Image Width on Smaller Screens 
+@media only screen and (max-width: 700px){
+    .modal-content {
+        width: 100%;
+    }
+}*/
+
+/******************************************************************/
+
+#page-wrap { width: 490px; margin: 50px auto; }
+
+.meter { 
+      height: 20px;  /* Can be anything */
+      position: relative;
+      margin: 60px 0 20px 0; /* Just for demo spacing */
+      background: #555;
+      -moz-border-radius: 25px;
+      -webkit-border-radius: 25px;
+      border-radius: 25px;
+      padding: 10px;
+      -webkit-box-shadow: inset 0 -1px 1px rgba(255,255,255,0.3);
+      -moz-box-shadow   : inset 0 -1px 1px rgba(255,255,255,0.3);
+      box-shadow        : inset 0 -1px 1px rgba(255,255,255,0.3);
+    }
+    .meter > span {
+      display: block;
+      height: 100%;
+         -webkit-border-top-right-radius: 8px;
+      -webkit-border-bottom-right-radius: 8px;
+             -moz-border-radius-topright: 8px;
+          -moz-border-radius-bottomright: 8px;
+                 border-top-right-radius: 8px;
+              border-bottom-right-radius: 8px;
+          -webkit-border-top-left-radius: 20px;
+       -webkit-border-bottom-left-radius: 20px;
+              -moz-border-radius-topleft: 20px;
+           -moz-border-radius-bottomleft: 20px;
+                  border-top-left-radius: 20px;
+               border-bottom-left-radius: 20px;
+      background-color: rgb(43,194,83);
+      background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0, rgb(43,194,83)),
+        color-stop(1, rgb(84,240,84))
+       );
+      background-image: -moz-linear-gradient(
+        center bottom,
+        rgb(43,194,83) 37%,
+        rgb(84,240,84) 69%
+       );
+      -webkit-box-shadow: 
+        inset 0 2px 9px  rgba(255,255,255,0.3),
+        inset 0 -2px 6px rgba(0,0,0,0.4);
+      -moz-box-shadow: 
+        inset 0 2px 9px  rgba(255,255,255,0.3),
+        inset 0 -2px 6px rgba(0,0,0,0.4);
+      box-shadow: 
+        inset 0 2px 9px  rgba(255,255,255,0.3),
+        inset 0 -2px 6px rgba(0,0,0,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    .meter > span:after, .animate > span > span {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background-image: 
+         -webkit-gradient(linear, 0 0, 100% 100%, 
+            color-stop(.25, rgba(255, 255, 255, .2)), 
+            color-stop(.25, transparent), color-stop(.5, transparent), 
+            color-stop(.5, rgba(255, 255, 255, .2)), 
+            color-stop(.75, rgba(255, 255, 255, .2)), 
+            color-stop(.75, transparent), to(transparent)
+         );
+      background-image: 
+        -moz-linear-gradient(
+          -45deg, 
+            rgba(255, 255, 255, .2) 25%, 
+            transparent 25%, 
+            transparent 50%, 
+            rgba(255, 255, 255, .2) 50%, 
+            rgba(255, 255, 255, .2) 75%, 
+            transparent 75%, 
+            transparent
+         );
+      z-index: 1;
+      -webkit-background-size: 50px 50px;
+      -moz-background-size: 50px 50px;
+      -webkit-animation: move 2s linear infinite;
+         -webkit-border-top-right-radius: 8px;
+      -webkit-border-bottom-right-radius: 8px;
+             -moz-border-radius-topright: 8px;
+          -moz-border-radius-bottomright: 8px;
+                 border-top-right-radius: 8px;
+              border-bottom-right-radius: 8px;
+          -webkit-border-top-left-radius: 20px;
+       -webkit-border-bottom-left-radius: 20px;
+              -moz-border-radius-topleft: 20px;
+           -moz-border-radius-bottomleft: 20px;
+                  border-top-left-radius: 20px;
+               border-bottom-left-radius: 20px;
+      overflow: hidden;
+    }
+    
+    .animate > span:after {
+      display: none;
+    }
+    
+    @-webkit-keyframes move {
+        0% {
+           background-position: 0 0;
+        }
+        100% {
+           background-position: 50px 50px;
+        }
+    }

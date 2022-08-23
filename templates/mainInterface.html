@@ -1,0 +1,191 @@
+﻿<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <title>WebTiger Extension</title>
+  <script type="text/javascript" src="static/jquery.min.js"></script>
+  <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico') }}"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
+  <script src="static/javascript.js"></script>
+</head>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+     // Opera 8.0+
+    var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+      // Firefox 1.0+
+    var isFirefox = typeof InstallTrigger !== 'undefined';
+      // Safari <= 9 "[object HTMLElementConstructor]" 
+    var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
+      // Internet Explorer 6-11
+    var isIE = /*@cc_on!@*/false || !!document.documentMode;
+        // Edge 20+
+    var isEdge = !isIE && !!window.StyleMedia;
+        // Chrome 1+
+    var isChrome = !!window.chrome && !!window.chrome.webstore;
+        // Blink engine detection
+    var isBlink = (isChrome || isOpera) && !!window.CSS;
+
+    var browser='';
+    if (isOpera)
+      browser='opera';
+    if (isFirefox)
+      browser='firefox';
+    if (isSafari)
+      browser='safari';
+    if (isIE)
+      browser='ie';
+    if (isChrome)
+      browser='chrome';
+    if (isEdge)
+      browser='edge';
+    console.log('BROWSER:'+browser);
+    document.getElementById("browser").value = browser;
+
+});
+
+</script>
+
+<body>
+  <section class="container">
+    <div class="layout">
+    <div style='display: inline-block;'>  
+      <img id='logo' src="static/favicon.ico"><h2>WebTiger Downloads</h2>
+      <form action='/webtiger/downloads' style='float:right'> <!-- /webtiger/downloads -->
+        <button id='sair' type='submit'>Sair</button> 
+      </form>  
+    <div>
+       <input type="hidden" name="initialHourHidden" id="initialHourHidden">
+       <input type="hidden" name="endHourHidden" id="endHourHidden">
+       <input type="hidden" name="transcriptionPartHidden" id="transcriptionPartHidden">
+       <input type="hidden" name="sinopsePartHidden" id="sinopsePartHidden">
+       <input type="hidden" name="browser" id="browser">
+
+        {% if erro: %}
+             <span style="color:red"><b> {{erro}} </b></span>
+        {% endif %}
+
+        <table>
+          <tr>  
+            <th><label>ID Chamada:</label><input type="number" name="IDCall" placeholder='ex: 120' id="IDCall"></th>
+            <th><label>Data Inicial:</label><input type="date" name="initialDate" placeholder='ex: 12-03-1990' id="initialDate" onchange="document.getElementById('initialHour').disabled = false;" onblur="verifyIntervalDate()"></th>
+            <th><label>Hora Inicial:</label><input type="time" name="initialHour" id="initialHour" placeholder='ex: 12:30' onchange="verifyHour(); HiddenFieldInitialHour()" disabled></th> 
+            <th><label>Data Fim:</label><input type="date" name="endDate" id="endDate" placeholder='ex: 12-03-1990' onchange="document.getElementById('endHour').disabled = false;" onblur="verifyIntervalDate()" ></th>
+            <th><label>Hora Final:</label><input type="time" name="endHour" id="endHour" placeholder='ex: 12:30' onchange="verifyHour(); HiddenFieldEndHour()" disabled></th>
+          </tr>
+          <tr>
+
+            <th><label>Telefone Alvo:</label><input type="text" name="DDDtelephoneTarget" id="DDDtelephoneTarget" placeholder="DDD" size='3' maxlength="3"> 
+                               <input type="text" name="telephoneTarget" id="telephoneTarget" onkeypress="mascara(this,'-')" placeholder="Numero" maxlength="10" size='10'></th>
+
+            <th><label>Telefone Interlocutor:</label> <input type="text" name="DDDtelephoneInter" id="DDDtelephoneInter" placeholder="DDD" size='3' maxlength="3"> 
+            <input type="text" name="telephoneInter" id="telephoneInter" onkeypress="mascara(this, '-')" size='10' placeholder="Numero" maxlength="10"></th> 
+
+            <th><label>Operação:</label>
+              <select type="text" name="operation" id="operation" onchange="ChangingTarget()">
+                <option value='0'>---Todas---</option>
+                 {% for row in operation %}  
+                    <option value="{{row['cod']|safe}}">{{row['nom']|safe}}</option> 
+                 {% endfor %}
+              </select>
+            </th>
+
+             <th><label>Alvo:</label>
+              <select type="text" name="target" id="target">
+                  <option value="todos">---Todos---</option>
+              </select>   
+            </th>
+
+             <th><label>Agente:</label>
+              <select type="text" name="agent" id="agent">
+                  <option value="todos">---Todos---</option>
+                   {% for row in agent %}  
+                      <option value="{{row['cod']|safe}}">{{row['nom']|safe}}</option> 
+                   {% endfor %}
+              </select>   
+            </th>
+
+          <tr>
+            <th><label>Transcrição:</label>
+              <select type="text" name="transcription" id="transcription" onchange="verifyTranscription()">
+                  <option value="todas">---Todas---</option>
+                  <option value="transcritas">Transcritas</option>
+                  <option value="naoTranscritas">Não Transcritas</option>
+              </select>   
+            </th>
+
+            <th><label>Trecho Transcrição:</label><input type="text" name="transcriptionPart" id="transcriptionPart" onchange="HiddenTranscriptionPart()" disabled></th>
+
+             <th><label>Sinopse:</label>
+              <select type="text" name="sinopse" id="sinopse" onchange="verifySinopse()">
+                  <option value="todas">---Todas---</option>
+                  <option value="comSinopse">Com Sinopse</option>
+                  <option value="semSinopse">Sem Sinopse</option>
+              </select>   
+            </th>
+
+            <th><label>Sinopse Trecho:</label><input type="text" name="sinopsePart" id="sinopsePart" onchange="HiddenSinopsePart()" disabled></th>
+
+            <th><label>Prioridade:</label>
+              <select type="text" name="priority" id="priority">
+                  <option value="">---Selecione---</option>
+                  <option value="3">Alta</option>
+                  <option value="2">Média</option>
+                  <option value="1">Baixa</option>
+              </select>   
+            </th>
+
+          </tr>
+          <tr>
+          <th><label>Direção da Ligação:</label>
+              <select type="text" name="directionCall" id="directionCall">
+                  <option value="">---Selecione---</option>
+                  <option value="1">Entrada</option>
+                  <option value="0">Saída</option>
+              </select>   
+            </th>
+
+            <th><label>Escutada:</label>
+              <select type="text" name="listening" id="listening">
+                  <option value="">---Selecione---</option>
+                  <option value="0">Não</option>
+                  <option value="1">Sim</option>
+              </select>   
+            </th>
+
+            <th><label>Processo:</label><input type="text" name="process" id="process"></th>
+
+            <th><label>Ligação com Áudio:</label>
+              <select type="text" name="callswithAudio" id="callswithAudio">
+                  <option value="todas">---Todas---</option>
+                  <option value="comAudio">Com Áudio</option>
+                  <option value="semAudio">Sem Áudio</option>
+              </select> 
+            </th>
+            <th><label>Ligação com Foto:</label>
+              <select type="text" name="callswithPhoto" id="callswithPhoto">
+                  <option value="comFoto">Com Foto</option>
+                  <option value="semFoto">Sem Foto</option>
+              </select> 
+            </th>
+
+          </tr>
+        </table>
+
+          <br>
+            <div id='DownloadLoading'>
+              <button id='downloadButton' onclick="carregando();">Procurar Arquivos</button>
+              <div id="myModal" class="modal">
+              <div id="page-wrap">
+              <div class="meter">
+                <span id='loading' style="width: 1%"></span>
+              </div></div>
+              <!--<meter id='loading' value="1" min="0" max="200" class="modal-content"></meter>
+                <img  src= '{{ url_for("static", filename="loading-icon.gif") }}' class="modal-content"/>-->
+                <div id="caption">Pesquisando registros, aguarde...</div> 
+              </div>   
+            </div> 
+          <span style='text-align: right'><h3>@ Wytron</h3></span>
+      </div>
+  </section>
+</body>
+</html>
